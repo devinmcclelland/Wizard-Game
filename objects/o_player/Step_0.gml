@@ -24,10 +24,3 @@ script_execute(calc_moverment);
 /// @DnDHash : 7B9614BF
 /// @DnDArgument : "script" "anim"
 script_execute(anim);
-
-/// @DnDAction : YoYo Games.Common.Execute_Script
-/// @DnDVersion : 1.1
-/// @DnDHash : 39CF36AC
-/// @DnDArgument : "script" "fullscreen"
-/// @DnDSaveInfo : "script" "fullscreen"
-script_execute(fullscreen);

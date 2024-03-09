@@ -60,7 +60,26 @@ function battle_state_select_action()
 	}
 	
 	//Select an action to perform
-	begin_action(_unit.id, global.action_library.attack, _unit.id);
+	//begin_action(_unit.id, global.action_library.attack, _unit.id);
+	
+	//if unit is player controlled:
+	if(_unit.object_index == o_battle_unit_pc)
+	{
+			//attack random party member
+			var _action = global.action_library.attack;
+			var _possible_targets = array_filter(o_battle.enemy_units, function(_unit, _index)
+			{
+				return (_unit.hp > 0);
+			});
+			var _target = _possible_targets[irandom(array_length(_possible_targets)-1)];
+			begin_action(_unit.id, _action, _target);
+	}
+	else
+	{
+		//if unit is AI controlled:
+		var _enemy_action = _unit. ai_script();
+		if (_enemy_action != -1) begin_action(_unit.id, _enemy_action[0], _enemy_action[1]);
+	}
 }
 
 //initiator of actions from both enemies and players

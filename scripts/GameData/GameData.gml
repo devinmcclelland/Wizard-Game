@@ -15,7 +15,7 @@ global.action_library =
 		func: function(_user, _targets)
 		{
 			var _damage = ceil(_user.strength + random_range(-_user.strength * 0.25, _user.strength *0.25));
-			with (_targets[0]) hp = max(0, hp - _damage);
+			battle_change_hp(_targets[0], -_damage, 0);
 		}
 	}
 }
@@ -65,11 +65,20 @@ global.enemies =
 		mp_max: 15,
 		strength: 6,
 		sprites: { idle: soipog5, attack: soipog5_atk, defend: rs_id_up, down: rs_id_up},
-		actions: []	,
+		actions: [global.action_library.attack]	,
 		xp_value: 10,
 		ai_script: function()
 		{
-			//enemy turn ai goes here
+			//attack random party member
+			var _action = actions[0];
+			var _possible_targets = array_filter(o_battle.party_units, function(_unit, _index)
+			{
+				return (_unit.hp > 0);
+			});
+			var _target = _possible_targets[irandom(array_length(_possible_targets)-1)];
+			return [_action, _target];
+			
+			
 		}
 		
 	}
